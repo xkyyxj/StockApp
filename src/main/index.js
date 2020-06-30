@@ -3,6 +3,7 @@
 import { app, BrowserWindow } from 'electron'
 import * as path from 'path'
 import { format as formatUrl } from 'url'
+import initEventListener from './msgCommunicate'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -37,6 +38,9 @@ function createMainWindow() {
       window.focus()
     })
   })
+
+  // 初始化主线程和渲染线程的事件交互
+  initEventListener()
 
   return window
 }
