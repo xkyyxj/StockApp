@@ -2,8 +2,17 @@ const path = require("path");
 const WasmPackPlugin = require("@wasm-tool/wasm-pack-plugin");
 
 module.exports = {
+  //eval-source-map即是webpack-internal的由来
+  //devtool:'',
+  // externals: [
+  //   'react-dom'
+  // ],
+  output: {
+    filename: 'boundle.js'
+  },
     module: {
-      rules: [{
+      rules: [
+        {
           test: /\.less$/,
           use: [{
               loader: "css-loader"
@@ -11,7 +20,15 @@ module.exports = {
               loader: "less-loader"
               
           }]
-      }]
+        },
+        {
+          test: /\.js$/,
+          exclude: /node_modules/, 
+          use:{
+              loader:'babel-loader'
+            }
+        }
+      ]
     },
     plugins: [
  
@@ -58,5 +75,11 @@ module.exports = {
           // pluginLogLevel: 'info'
         }),
      
-      ]
+      ],
+      devServer: {
+        host: 'localhost',
+        compress: true,
+        inline: true,
+        hot: true
+      }
   }

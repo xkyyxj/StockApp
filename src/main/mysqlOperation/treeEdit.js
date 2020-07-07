@@ -1,12 +1,4 @@
-import mysql from 'mysql';
-
-var pool  = mysql.createPool({
-    connectionLimit : 10,
-    host            : 'localhost',
-    user            : 'root',
-    password        : '123',
-    database        : 'stock'
-})
+import pool from './pool'
 
 export function queryAllTree() {
     let retPromise = new Promise((resolve, reject) => {

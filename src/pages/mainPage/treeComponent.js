@@ -2,11 +2,14 @@ import React, { Component } from 'react'
 import { ipcRenderer } from 'electron'
 import TreeView from '@material-ui/lab/TreeView';
 import TreeItem from '@material-ui/lab/TreeItem';
+import { connect } from 'react-redux'
+
+import { ActionType } from '../../constant'
 
 /**
  * 主页面的左树，主要是展示类别数据
  */
-export default class CategoryTree extends Component {
+class CategoryTree extends Component {
     constructor(props) {
         super(props)
 
@@ -16,7 +19,7 @@ export default class CategoryTree extends Component {
 
         // 加载数据
         ipcRenderer.on('allTreeInfo', (event, args) => {
-            if(!args) 
+            if(!args)
                 return
             this.setState({data: args.results})
         })
@@ -27,6 +30,17 @@ export default class CategoryTree extends Component {
 
     onItemClicked(itemKey) {
         console.log(itemKey)
+        this.props.dispatch(dispatch => {
+            ipcRenderer.on('allTableInfo', (event, args) => {
+                if(!args) 
+                    return
+                dispatch({
+                    type: ActionType.TableData,
+                    payload: args
+                })
+            })
+            ipcRenderer.send('tableInfo', 'hahahahha')
+        })
     }
 
     /**
@@ -93,3 +107,9 @@ export default class CategoryTree extends Component {
         )
     }
 }
+
+function mapStateToProps(state) {
+    return {}
+}
+
+export default connect(mapStateToProps)(CategoryTree)

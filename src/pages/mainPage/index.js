@@ -7,13 +7,8 @@ export default class MainPage extends Component {
     constructor(props) {
         super(props)
     }
-
-    treeItemClicked(nodeId) {
-        
-    }
-
-    _constructTree(data) {
-        
+    componentDidMount() {
+        console.log(this.props, 'MainPage this.props')
     }
 
     render() {
@@ -29,7 +24,6 @@ export default class MainPage extends Component {
                         </Grid>
                     </Grid>
                 </Grid>
-                
             </Grid>
         )
     }

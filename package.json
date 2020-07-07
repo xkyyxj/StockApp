@@ -1,4 +1,5 @@
 {
+  "comment":"whiteListedModules是render进程打包的时候的白名单，如果没有加进来就不会打包到输出当中，详见electron-webpack/out/main.js",
   "name": "electron-webpack-quick-start",
   "version": "0.0.0",
   "license": "MIT",
@@ -13,27 +14,37 @@
     "@material-ui/lab": "^4.0.0-alpha.56",
     "immutable": "^4.0.0-rc.12",
     "mysql": "^2.18.1",
+    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
     "redux-immutable": "^4.0.0",
-    "redux-thunk": "^2.3.0",
-    "source-map-support": "^0.5.16"
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.10.1",
     "@wasm-tool/wasm-pack-plugin": "^1.3.1",
-    "electron": "8.2.0",
+    "electron": "9.0.5",
     "electron-builder": "^22.4.1",
     "electron-webpack": "^2.8.2",
-    "webpack": "~4.42.1",
     "less": "^3.11.3",
-    "less-loader": "^6.1.3"
+    "less-loader": "^6.1.3",
+    "webpack": "~4.43.0"
   },
   "electronWebpack": {
     "renderer": {
       "webpackConfig": "webpack.renderer.additions.js"
-    }
+    },
+    "whiteListedModules": [
+      "@material-ui/core",
+      "@material-ui/lab",
+      "immutable",
+      "prop-types",
+      "react-redux",
+      "redux",
+      "redux-immutable",
+      "redux-thunk"
+    ]
   }
 }
