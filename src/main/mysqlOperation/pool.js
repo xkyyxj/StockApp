@@ -9,4 +9,7 @@ var pool  = mysql.createPool({
     database        : 'stock'
 })
 
+// 记录下连接池的时间戳
+pool.ts = new Date().getTime()
+
 export default pool

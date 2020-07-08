@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import CategoryTree from './treeComponent'
+import MainTable from './table'
 import Grid from '@material-ui/core/Grid';
 import './index.less'
 
@@ -22,6 +23,7 @@ export default class MainPage extends Component {
                         <Grid item xs={12}>
                             <canvas id="canvas" className='canvasClass'></canvas>
                         </Grid>
+                        <MainTable/>
                     </Grid>
                 </Grid>
             </Grid>

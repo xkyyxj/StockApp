@@ -4,6 +4,7 @@ import TreeView from '@material-ui/lab/TreeView';
 import TreeItem from '@material-ui/lab/TreeItem';
 import { connect } from 'react-redux'
 
+import { queryAllGridData, queryAllTree } from '../../main/mysqlOperation'
 import { ActionType } from '../../constant'
 
 /**
@@ -18,28 +19,55 @@ class CategoryTree extends Component {
         }
 
         // 加载数据
-        ipcRenderer.on('allTreeInfo', (event, args) => {
-            if(!args)
+        // ipcRenderer.on('allTreeInfo', (event, args) => {
+        //     if(!args)
+        //         return
+        //         console.log("hahahahhahah")
+        //     console.log(args)
+        //     this.setState({data: args.results})
+        // })
+        // ipcRenderer.send('treeInfo', 'hahahahha')
+        let treeDataPromise = queryAllTree()
+        treeDataPromise.then(resp => {
+            if(!resp.results) {
                 return
-            this.setState({data: args.results})
+            }
+            console.log(resp.results)
+            this.setState({data: resp.results})
         })
-        ipcRenderer.send('treeInfo', 'hahahahha')
 
         this.onItemClicked = this.onItemClicked.bind(this)
     }
 
-    onItemClicked(itemKey) {
-        console.log(itemKey)
+    /**
+     * 树节点的点击事件，发送react-redux事件，然后存储数据
+     * @param {*} allData 节点的所有数据，其实就是数据库记录
+     */
+    onItemClicked(allData) {
         this.props.dispatch(dispatch => {
-            ipcRenderer.on('allTableInfo', (event, args) => {
-                if(!args) 
-                    return
+
+            let retPromise = queryAllGridData(allData)
+            retPromise.then(resp => {
+                let lastResult = {
+                    [allData]: {
+                        meta: resp[0].results,
+                        datas: resp[1].results
+                    },
+                    currTab: allData
+                }
                 dispatch({
                     type: ActionType.TableData,
-                    payload: args
+                    payload: lastResult
                 })
             })
-            ipcRenderer.send('tableInfo', 'hahahahha')
+
+            // ipcRenderer.once('allTableInfo', (event, args) => {
+            //     if(!args)
+            //         return
+            //     // 规整一下表格数据格式
+                
+            // })
+            // ipcRenderer.send('tableInfo', {pk_tablemeta: allData})
         })
     }
 
@@ -87,9 +115,7 @@ class CategoryTree extends Component {
             return items.map(item => {
                 return (
                     <TreeItem key={item.pk_category} nodeId={item.pk_category} label={item.category_name} onLabelClick={
-                        () => {
-                            this.onItemClicked(item.pk_category)
-                        }
+                        this.onItemClicked.bind(this,item.pk_tablemeta)
                     }>
                         {loop(item.child)}
                     </TreeItem>
@@ -108,8 +134,4 @@ class CategoryTree extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {}
-}
-
-export default connect(mapStateToProps)(CategoryTree)
+export default connect()(CategoryTree)

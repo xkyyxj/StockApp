@@ -13,12 +13,15 @@ function queryAllTreeInfo() {
             console.log(err)
         })
     })
-      
 }
 
-function queryTableData(pk_tablemeta) {
+/**
+ * 查询表格数据，根据pk_tablemeta来查
+ * 返回数据是两个：table_column以及对应的业务表的数据
+ */
+function queryTableData() {
     ipcMain.on('tableInfo', (event, args) => {
-        let retPromise = queryAllGridData(pk_tablemeta)
+        let retPromise = queryAllGridData(args.pk_tablemeta)
         retPromise.then(resp => {
             event.reply('allTableInfo', resp)
         }, err => {
@@ -27,6 +30,10 @@ function queryTableData(pk_tablemeta) {
     })
 }
 
+/**
+ * 初始化事件监听的类
+ */
 export default function initEventListener() {
     queryAllTreeInfo()
+    queryTableData()
 }

@@ -1,5 +1,5 @@
 {
-  "comment":"whiteListedModules是render进程打包的时候的白名单，如果没有加进来就不会打包到输出当中，详见electron-webpack/out/main.js",
+  "comment": "whiteListedModules是render进程打包的时候的白名单，如果没有加进来就不会打包到输出当中，详见electron-webpack/out/main.js",
   "name": "electron-webpack-quick-start",
   "version": "0.0.0",
   "license": "MIT",
@@ -20,7 +20,8 @@
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
     "redux-immutable": "^4.0.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "source-map-support": "^0.5.19"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.10.1",

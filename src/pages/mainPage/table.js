@@ -7,11 +7,23 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
+import { queryAllGridData } from '../../main/mysqlOperation'
 import { connect } from 'react-redux'
 
+/**
+ * 表格组件，用于展示股票详情
+ */
 class DataTable extends PureComponent {
     constructor(props) {
         super(props)
+    }
+
+    componentDidMount() {
+        let prom = queryAllGridData(2)
+        prom.then(resp => {
+            console.log("123")
+        })
+        console.log(this.props.tableInfo)
     }
 
     render() {
@@ -48,7 +60,8 @@ class DataTable extends PureComponent {
 
 function mapStateToProps(state) {
     let value = state.get('tableInfo').get('currTab')
+    console.log(value)
     return {tableInfo: state.get('tableInfo').get(value)}
 }
 
-//export default connect(mapStateToProps)(DataTable)
+export default connect(mapStateToProps)(DataTable)
