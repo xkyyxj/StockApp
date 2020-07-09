@@ -18,25 +18,26 @@ class DataTable extends PureComponent {
         super(props)
     }
 
-    componentDidMount() {
-        let prom = queryAllGridData(2)
-        prom.then(resp => {
-            console.log("123")
+    _processTableColumn() {
+        let tableColumns = this.props.tableInfo ? this.props.tableInfo.meta : null
+        if(!tableColumns) {
+            return
+        }
+        return tableColumns.map(item => {
+            return (
+                <TableCell>{item.display_name}</TableCell>
+            )
         })
-        console.log(this.props.tableInfo)
     }
 
     render() {
+        this._processTableColumn()
         return (
             <TableContainer component={Paper}>
                 <Table className='main-table' aria-label="simple table">
                     <TableHead>
                     <TableRow>
-                        <TableCell>Dessert (100g serving)</TableCell>
-                        <TableCell align="right">Calories</TableCell>
-                        <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                        <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                        <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                        {this._processTableColumn()}
                     </TableRow>
                     </TableHead>
                     <TableBody>
@@ -60,8 +61,8 @@ class DataTable extends PureComponent {
 
 function mapStateToProps(state) {
     let value = state.get('tableInfo').get('currTab')
-    console.log(value)
-    return {tableInfo: state.get('tableInfo').get(value)}
+    // 为啥下面必须要转换成字符串才能够获取出来？？？？？？？？？？
+    return {tableInfo: state.get('tableInfo').get(`${value}`)}
 }
 
 export default connect(mapStateToProps)(DataTable)

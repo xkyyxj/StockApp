@@ -18,21 +18,11 @@ class CategoryTree extends Component {
             data: []
         }
 
-        // 加载数据
-        // ipcRenderer.on('allTreeInfo', (event, args) => {
-        //     if(!args)
-        //         return
-        //         console.log("hahahahhahah")
-        //     console.log(args)
-        //     this.setState({data: args.results})
-        // })
-        // ipcRenderer.send('treeInfo', 'hahahahha')
         let treeDataPromise = queryAllTree()
         treeDataPromise.then(resp => {
             if(!resp.results) {
                 return
             }
-            console.log(resp.results)
             this.setState({data: resp.results})
         })
 
@@ -48,6 +38,7 @@ class CategoryTree extends Component {
 
             let retPromise = queryAllGridData(allData)
             retPromise.then(resp => {
+                console.log(`end in ${new Date().getTime()}`)
                 let lastResult = {
                     [allData]: {
                         meta: resp[0].results,
@@ -60,14 +51,6 @@ class CategoryTree extends Component {
                     payload: lastResult
                 })
             })
-
-            // ipcRenderer.once('allTableInfo', (event, args) => {
-            //     if(!args)
-            //         return
-            //     // 规整一下表格数据格式
-                
-            // })
-            // ipcRenderer.send('tableInfo', {pk_tablemeta: allData})
         })
     }
 

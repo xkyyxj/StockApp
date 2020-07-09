@@ -8,9 +8,6 @@ export default class MainPage extends Component {
     constructor(props) {
         super(props)
     }
-    componentDidMount() {
-        console.log(this.props, 'MainPage this.props')
-    }
 
     render() {
         return(
