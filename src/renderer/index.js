@@ -3,7 +3,7 @@ import ReactDom from 'react-dom'
 import { Provider } from 'react-redux'
 import MainPage from '../pages/mainPage'
 import initStore from './reduxConfig'
-const wasm = import('../stockapprust/pkg')
+//const wasm = import('../stockapprust/pkg')
 const store = initStore()
 
 let TopApp = (

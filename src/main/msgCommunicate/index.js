@@ -31,9 +31,19 @@ function queryTableData() {
 }
 
 /**
+ * 接收template参数，构建对应的Menu
+ */
+function initContextMenu() {
+    ipcMain.on('ContextMenu', (event, args) => {
+
+    })
+}
+
+/**
  * 初始化事件监听的类
  */
 export default function initEventListener() {
     queryAllTreeInfo()
     queryTableData()
+    initContextMenu()
 }

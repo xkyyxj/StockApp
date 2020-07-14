@@ -37,3 +37,8 @@ export function queryAllGridData(tableId, wherePart) {
     })
     return fianlResult
 }
+
+export function addTableMeta(data) {
+    let insertTableMeta = `insert into table_meta(table_name, is_redis) values(?,?)`
+    let insertTableColumn = `insert into table_column(pk_tablemeta, display_name, columntype, column_name) values(?,?,?,?)`
+}
