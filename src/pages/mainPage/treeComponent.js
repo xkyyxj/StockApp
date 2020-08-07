@@ -36,20 +36,22 @@ class CategoryTree extends Component {
     onItemClicked(allData) {
         this.props.dispatch(dispatch => {
 
-            let retPromise = queryAllGridData(allData)
+            let retPromise = queryAllGridData(allData.pk_tablemeta)
             retPromise.then(resp => {
                 console.log(`end in ${new Date().getTime()}`)
                 let lastResult = {
-                    [allData]: {
+                    [allData.pk_tablemeta]: {
                         meta: resp[0].results,
                         datas: resp[1].results
                     },
-                    currTab: allData
+                    currTab: allData.pk_tablemeta
                 }
                 dispatch({
                     type: ActionType.TableData,
                     payload: lastResult
                 })
+            }, err => {
+                console.log(err)
             })
         })
     }
@@ -98,7 +100,7 @@ class CategoryTree extends Component {
             return items.map(item => {
                 return (
                     <TreeItem key={item.pk_category} nodeId={item.pk_category} label={item.category_name} onLabelClick={
-                        this.onItemClicked.bind(this,item.pk_tablemeta)
+                        this.onItemClicked.bind(this,item)
                     }>
                         {loop(item.child)}
                     </TreeItem>

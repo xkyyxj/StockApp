@@ -23,6 +23,8 @@ export function queryAllGridData(tableId, wherePart) {
         let tableMeta = new Promise((resolve, reject) => {
             pool.query(`SELECT * from table_column where pk_tablemeta=?`, [tableId], function (error, results, fields) {
                 if (error) reject(error)
+                // 添加以下表格名称字段
+                results.tableName = resp.results[0].table_name
                 resolve({results, fields})
             });
         })
@@ -38,7 +40,28 @@ export function queryAllGridData(tableId, wherePart) {
     return fianlResult
 }
 
+/**
+ * 添加新的表格内容
+ * @param {*} data 
+ */
 export function addTableMeta(data) {
     let insertTableMeta = `insert into table_meta(table_name, is_redis) values(?,?)`
     let insertTableColumn = `insert into table_column(pk_tablemeta, display_name, columntype, column_name) values(?,?,?,?)`
+}
+
+export function insertTableInfo(tableMeta, datas) {
+    let tableName = tableMeta.tableName
+
+    let columnsStr = tableMeta.map(item => {
+        return item.column_name
+    }).join(",")
+    let valuesItems = new Array(tableMeta.length).fill("?").join(",")
+    let sql = `insert into ${tableName}(${columnsStr}) values(${valuesItems})`
+    let retPromise = new Promise((resolve, reject) => {
+        pool.query(sql, datas, function(error, results, fields) {
+            if(error) reject(error)
+            resolve(results)
+        })
+    })
+    return retPromise
 }

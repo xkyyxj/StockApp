@@ -1,7 +1,11 @@
 import { queryAllTree } from './treeEdit'
-import { queryAllGridData } from './tableOperate'
+import { queryAllGridData, insertTableInfo } from './tableOperate'
+import { commonQuery } from './common'
 
 export {
     queryAllTree,
-    queryAllGridData
+    queryAllGridData,
+    insertTableInfo,
+
+    commonQuery
 }

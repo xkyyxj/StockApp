@@ -93,7 +93,7 @@ class DataTable extends PureComponent {
                             displayInfo = this._formatDate(displayInfo)
                         }
                         return (
-                            <TableCell align="right">{displayInfo}</TableCell>
+                            <TableCell align="center">{displayInfo}</TableCell>
                         )
                     })}
                 </TableRow>
@@ -111,7 +111,7 @@ class DataTable extends PureComponent {
             (
                 <div className="tableDiv" onContextMenu={this._rightButtonClickEvent}>
                     <TableContainer component={Paper}>
-                        <Table className='main-table' aria-label="simple table">
+                        <Table className='main-table' size="small" aria-label="simple table">
                             <TableHead>
                                 <TableRow>
                                     {this._processTableColumn()}
